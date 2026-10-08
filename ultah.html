@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="id"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Untukmu 🎁</title>
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);--bg1:#2a0a3d;--bg2:#7a1f5c;--tx:#fff;--ac:#ffb3d1}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:linear-gradient(160deg,var(--bg1),var(--bg2));color:var(--tx);font-family:'Poppins',system-ui,sans-serif;overflow:hidden}
+.scene{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px;opacity:0;pointer-events:none;transition:opacity 1s;overflow-y:auto}
+.scene.on{opacity:1;pointer-events:auto}
+h1,h2{font-family:'Dancing Script',cursive,serif;margin:.2em 0}
+.btn{background:var(--ac);color:#4a0d33;border:0;border-radius:99px;padding:12px 28px;font-size:1rem;font-weight:600;cursor:pointer;margin-top:24px;box-shadow:0 6px 20px #0005;transition:transform .2s}
+.btn:hover{transform:scale(1.06)}
+.gift{font-size:6rem;cursor:pointer;animation:bob 1.6s infinite;background:none;border:0;filter:drop-shadow(0 8px 16px #0006)}
+@keyframes bob{50%{transform:translateY(-14px) rotate(4deg)}}
+.fl{position:fixed;bottom:-40px;animation:up linear forwards;pointer-events:none;z-index:0}
+@keyframes up{to{transform:translateY(-115vh) rotate(40deg);opacity:0}}
+#nama{font-size:clamp(2.6rem,12vw,5rem);color:var(--ac);opacity:0;transform:scale(.6);transition:all 1.6s}
+#nama.on{opacity:1;transform:none}
+.bd{width:100%;text-align:center}
+.bd div{text-align:center;line-height:1.15}
+.bd div:nth-child(2) span{font-size:clamp(3.4rem,16vw,6.5rem);color:var(--ac);text-shadow:0 4px 24px #0009}
+.bd div:nth-child(1) span{font-size:clamp(1.9rem,8vw,3.4rem);text-shadow:0 4px 18px #0009}
+.bd span{display:inline-block;font-family:'Dancing Script',cursive,serif;font-size:clamp(2.4rem,11vw,4.5rem);opacity:0;transform:translateY(30px) rotate(-8deg);animation:pop .6s forwards}
+@keyframes pop{to{opacity:1;transform:none}}
+.pol-wrap{display:flex;flex-wrap:wrap;gap:18px;justify-content:center;max-width:760px}
+.pol{background:#fff;color:#333;padding:10px 10px 8px;width:140px;box-shadow:0 8px 20px #0007;cursor:pointer;transition:transform .3s;font-size:.8rem}
+.pol:nth-child(odd){transform:rotate(-5deg)}.pol:nth-child(even){transform:rotate(4deg)}
+.pol:hover{transform:scale(1.1) rotate(0)}
+.ph{height:120px;display:flex;align-items:center;justify-content:center;font-size:3rem;margin-bottom:6px}
+#modal{position:fixed;inset:0;background:#000b;display:none;align-items:center;justify-content:center;z-index:9}
+#modal.on{display:flex}
+#modal .pol{width:min(80vw,340px);transform:none!important;cursor:default}
+#modal .ph{height:min(70vw,300px);font-size:7rem}
+#surat{max-width:520px;text-align:left;line-height:1.8;font-size:1.05rem;white-space:pre-wrap;min-height:260px;background:#ffffff14;border:1px solid #fff3;border-radius:16px;padding:22px}
+.hide{display:none}
+canvas{position:fixed;inset:0;pointer-events:none;z-index:5}
+.sparkle{position:fixed;pointer-events:none;z-index:6}
+
+/* ===== LATAR KOLASE FOTO (Cara 2) ===== */
+
+#bgfoto{position:fixed;inset:0;z-index:-2;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(2,1fr);filter:blur(3px);transform:scale(1.05)}
+#bgfoto img{width:100%;height:100%;object-fit:cover}
+#bgfoto::after{content:"";position:absolute;inset:0;background:linear-gradient(#2a0a3dbb,#7a1f5cbb)}
+@media(max-width:600px){#bgfoto{grid-template-columns:repeat(2,1fr);grid-template-rows:repeat(3,1fr)}}
+</style></head><body>
+  <div id="bgfoto">
+  <img src="foto7.jpeg" alt="">
+  <img src="foto8.jpeg" alt="">
+  <img src="foto9.jpeg" alt="">
+  <img src="foto10.jpeg" alt="">
+  <img src="foto11.jpeg" alt="">
+  <img src="foto12.jpeg" alt="">
+</div>
+
+<div class="scene on" id="s1">
+  <p style="font-size:1.2rem">*•.¸♡ SELAMAT ULANG TAHUN SAYANG ♡¸.•*</p>
+  <button class="gift" id="g1" aria-label="Buka">🎁</button>
+  <small>✨ klik untuk membuka ✨</small>
+</div>
+
+<div class="scene" id="s2">
+  <p>Untuk seseorang yang paling spesial...</p>
+  <h1 id="nama"></h1>
+  <button class="btn hide" id="n2">Lanjut 💖</button>
+</div>
+
+<div class="scene" id="s3">
+  <div class="bd" id="bd"></div>
+  <p id="sub" style="opacity:0;transition:opacity 2s">Semoga hari ini sebahagia perasaan & senyummu 🎂</p>
+  <button class="btn hide" id="n3">Lihat kenangan kita 📸</button>
+</div>
+
+<div class="scene" id="s4">
+  <h2>Kenangan Kita</h2>
+  <p style="margin:0 0 16px"><small>klik foto untuk memperbesar</small></p>
+  <div class="pol-wrap" id="pols"></div>
+  <button class="btn" id="n4">Baca suratku 💌</button>
+</div>
+<div id="modal"><div class="pol" id="mp"></div></div>
+
+<div class="scene" id="s5">
+  <h2>Surat Untuk Yang Punya Hari 💌</h2>
+  <div id="surat"></div>
+  <button class="btn hide" id="n5">Ada kejutan lagi... 🎁</button>
+</div>
+
+<div class="scene" id="s6">
+  <h2 id="t6">Satu hadiah lagi untukmu</h2>
+  <button class="gift" id="g2" aria-label="Buka hadiah">🎁</button>
+  <small>klik kotaknya!</small>
+</div>
+
+<div class="scene" id="s7">
+  <h1 style="font-size:clamp(2.4rem,10vw,4rem)">🎉 Happy Birthday! 🎉</h1>
+  <p id="final" style="max-width:480px;line-height:1.8;font-size:1.1rem"></p>
+  <button class="btn" onclick="boom(150)">Sekali lagi 🎆</button>
+</div>
+<canvas id="cv"></canvas>
+
+<script>
+/* ====== EDIT BAGIAN INI ====== */
+const NAMA = "OKTIA";            // ganti dengan nama pacarmu
+const DARI = "GUNG DE";               // namamu
+const SURAT = `Hai ${NAMA},
+
+Selamat ulang tahun Sayangg💖! Terima kasih sudah hadir dan mewarnai hari-hariku.Terima kasih sudah selalu sabar sama tingkah laku pacarmu ini, suka duka bersama, dan sudah jadi rumah untuk cerita-ceritaku.
+Aku berdoa semoga kamu sehat selalu, bahagia selalu, dan semua yang kamu impikan satu per satu bisa tercapai. Bisa selalu jadi anak yang baik dan dibanggakan orang tua. Aku akan selalu ada di sampingmu,(kecuali lagi ngumpul bareng temen hihihi).LOVE YOU SAYANGKUU😘🥰.
+
+Salam Sayang,
+${DARI} 💖`;
+const PESAN_AKHIR = `Selamat ulang tahun ${NAMA}. Aku sayang kamu hari ini dan seterusnya. 💖`;
+const FOTO = [
+  {src:"foto1.jpeg", c:"Awal ketemu"},
+  {src:"foto2.jpeg", c:"Makan bareng"},
+  {src:"foto3.jpeg", c:"Sunset favorit"},
+  {src:"foto4.jpeg", c:"Nonton berdua"},
+  {src:"foto5.jpeg", c:"Jalan-jalan"},
+  {src:"foto6.jpeg", c:"Galungan Day"}
+];
+/* ============================= */
+
+const $=id=>document.getElementById(id);
+let cur="s1";
+function go(id){$(cur).classList.remove("on");cur=id;setTimeout(()=>$(id).classList.add("on"),600)}
+
+/* musik: Happy Birthday via WebAudio */
+let ac,musicOn=false;
+function music(){
+  ac=new (window.AudioContext||window.webkitAudioContext)();
+  const n={C:262,D:294,E:330,F:349,G:392,A:440,B:466,c:523};
+  const seq="CC,D,C,F,E,.CC,D,C,G,F,.CC,c,A,F,E,D,.BB,A,F,G,F".split(",");
+  const dur=[.3,.3,.7,.7,.7,1.2,.3,.3,.7,.7,.7,1.2,.3,.3,.7,.7,.7,.7,1.2,.3,.3,.7,.7,.7,1.4];
+  const notes="C C D C F E C C D C G F C C c A F E D B B A F G F".split(" ");
+  let t=ac.currentTime+.2;
+  const g0=ac.createGain();g0.gain.value=.12;g0.connect(ac.destination);
+  function play(){
+    let t=ac.currentTime+.1;
+    notes.forEach((k,i)=>{const o=ac.createOscillator(),g=ac.createGain();
+      o.type="sine";o.frequency.value=(k==="B"?466:n[k]);
+      g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(1,t+.03);g.gain.exponentialRampToValueAtTime(.001,t+(dur[i]||.7));
+      o.connect(g);g.connect(g0);o.start(t);o.stop(t+(dur[i]||.7));t+=(dur[i]||.7)*.95});
+    setTimeout(()=>musicOn&&play(),(t-ac.currentTime+3)*1000);
+  }
+  musicOn=true;play();
+}
+
+/* partikel melayang */
+function floaty(list,count,gap){
+  for(let i=0;i<count;i++)setTimeout(()=>{
+    const s=document.createElement("div");s.className="fl";s.textContent=list[Math.random()*list.length|0];
+    s.style.left=Math.random()*100+"vw";s.style.fontSize=14+Math.random()*26+"px";
+    s.style.animationDuration=5+Math.random()*6+"s";document.body.appendChild(s);
+    setTimeout(()=>s.remove(),11000)},i*gap);
+}
+let loop;
+function startFloat(){floaty(["💖","✨","⭐","💗","🌟","💐","🌷","🌸"],25,200);loop=setInterval(()=>floaty(["💖","✨","⭐","💗"],4,400),2000)}
+
+/* 1 -> 2 */
+$("g1").onclick=()=>{
+  music();go("s2");startFloat();
+  setTimeout(()=>{$("nama").textContent=NAMA;$("nama").classList.add("on")},1500);
+  setTimeout(()=>$("n2").classList.remove("hide"),4200);
+};
+/* 2 -> 3 */
+$("n2").onclick=()=>{
+  go("s3");
+  const b=$("bd");b.innerHTML="";
+    ["✨Happy Birthday,✨",NAMA+"!"].forEach((w,wi)=>{
+    const d=document.createElement("div");
+    [...w].forEach((ch,i)=>{const s=document.createElement("span");s.textContent=ch===" "?"\u00a0":ch;
+      s.style.animationDelay=(1+wi*.9+i*.07)+"s";d.appendChild(s)});
+    b.appendChild(d)});
+      const e=document.createElement("div");e.textContent="🎂 💖 🎉 ✨";
+  e.style.cssText="font-size:3rem;margin-top:8px;opacity:0;animation:pop .8s 3.4s forwards";b.appendChild(e);
+  setTimeout(()=>$("sub").style.opacity=1,4200);
+  setTimeout(()=>$("n3").classList.remove("hide"),5000);
+};
+/* 3 -> 4 */
+FOTO.forEach(f=>{
+  const d=document.createElement("div");d.className="pol";
+  d.innerHTML=`<div class="ph" style="background:${f.bg||'#eee'};overflow:hidden">${f.src?`<img src="${f.src}" alt="" style="width:100%;height:100%;object-fit:cover">`:f.e}</div>${f.c}`;
+  d.onclick=()=>{$("mp").innerHTML=d.innerHTML;$("modal").classList.add("on");sparkle()};
+  $("pols").appendChild(d)});
+$("modal").onclick=()=>$("modal").classList.remove("on");
+$("n3").onclick=()=>go("s4");
+/* 4 -> 5 typing */
+let typer;
+$("n4").onclick=()=>{
+  go("s5");const el=$("surat");el.textContent="";let i=0;
+  setTimeout(()=>{typer=setInterval(()=>{
+    el.textContent=SURAT.slice(0,++i);
+    if(i>=SURAT.length){clearInterval(typer);$("n5").classList.remove("hide")}},55)},900);
+  el.onclick=()=>{i=SURAT.length}; // ketuk untuk mempercepat
+};
+/* 5 -> 6 */
+$("n5").onclick=()=>go("s6");
+/* 6 -> 7 */
+$("g2").onclick=()=>{
+  const g=$("g2");g.textContent="🎊";g.style.animation="none";g.style.transform="scale(1.5)";g.style.transition="transform .5s";
+  $("t6").textContent="Taraaa!";
+  setTimeout(()=>{go("s7");boom(220);
+    const f=$("final");f.textContent="";let i=0;
+    setTimeout(()=>{const t=setInterval(()=>{f.textContent=PESAN_AKHIR.slice(0,++i);if(i>=PESAN_AKHIR.length)clearInterval(t)},50)},1200);
+    setTimeout(()=>boom(150),2500);setTimeout(()=>boom(150),5000);
+  },900);
+};
+function sparkle(){
+  const em=["💖","✨","⭐","💗","🌟","💕"];
+  [0,250].forEach(delay=>setTimeout(()=>{
+    for(let i=0;i<22;i++){
+      const s=document.createElement("div");s.className="sparkle";
+      s.textContent=em[Math.random()*em.length|0];
+      s.style.left="50vw";s.style.top="50vh";s.style.zIndex=10;
+      s.style.fontSize=16+Math.random()*22+"px";
+      document.body.appendChild(s);
+      const a=Math.random()*6.28,r=140+Math.random()*200;
+      const dx=Math.cos(a)*r,dy=Math.sin(a)*r;
+      s.animate([
+        {transform:"translate(-50%,-50%) scale(0) rotate(0deg)",opacity:1},
+        {transform:`translate(calc(-50% + ${dx}px),calc(-50% + ${dy}px)) scale(1.4) rotate(${Math.random()*360}deg)`,opacity:1,offset:.6},
+        {transform:`translate(calc(-50% + ${dx*1.1}px),calc(-50% + ${dy*1.1+80}px)) scale(.6) rotate(${Math.random()*540}deg)`,opacity:0}
+      ],{duration:1600+Math.random()*700,easing:"cubic-bezier(.2,.8,.3,1)"}).onfinish=()=>s.remove();
+    }
+  },delay));
+}
+/* confetti */
+const cv=$("cv"),cx=cv.getContext("2d");let P=[],run=false;
+function size(){cv.width=innerWidth;cv.height=innerHeight}size();addEventListener("resize",size);
+function boom(n){
+  const cl=["#ff5c8a","#ffd166","#06d6a0","#4cc9f0","#c77dff","#fff"];
+  for(let i=0;i<n;i++)P.push({x:innerWidth/2,y:innerHeight*.45,vx:(Math.random()-.5)*16,vy:-Math.random()*16-2,
+    s:4+Math.random()*6,c:cl[Math.random()*cl.length|0],r:Math.random()*6,l:1});
+  if(!run){run=true;tick()}
+}
+function tick(){
+  cx.clearRect(0,0,cv.width,cv.height);
+  P.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.vy+=.25;p.vx*=.99;p.r+=.2;p.l-=.006;
+    cx.save();cx.globalAlpha=Math.max(p.l,0);cx.translate(p.x,p.y);cx.rotate(p.r);
+    cx.fillStyle=p.c;cx.fillRect(-p.s/2,-p.s/2,p.s,p.s*.6);cx.restore()});
+  P=P.filter(p=>p.l>0&&p.y<innerHeight+50);
+  if(P.length)requestAnimationFrame(tick);else run=false;
+}
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+</body></html>
